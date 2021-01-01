@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,13 +18,23 @@ namespace JeffPaulin.Models
         }
 
         public int Id { get; set; }
+        [DisplayName("Title")]
+        [Required]
         public string PostHeader { get; set; }
+        [DisplayName("Subtitle")]
         public string PostSubheader { get; set; }
+        [DisplayName("Body")]
+        [Required]
         public string PostBody { get; set; }
+        [DisplayName("Post Date")]
         public DateTime CreatedDate { get; set; }
+        [DisplayName("Author")]
         public string PostedBy { get; set; }
+        [DisplayName("Draft")]
         public bool IsDraft { get; set; }
+        [DisplayName("Active")]
         public bool IsActive { get; set; }
+        [DisplayName("Deleted")]
         public bool IsDeleted { get; set; }
 
         public virtual ICollection<BlogPostRec> BlogPostRecs { get; set; }

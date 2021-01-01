@@ -9,6 +9,7 @@ using JeffPaulin.Models;
 
 namespace JeffPaulin.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
     public class BlogsController : Controller
     {
         private readonly jpContext _context;
