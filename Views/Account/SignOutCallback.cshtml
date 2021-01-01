@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Sign Out";
+    Layout = "";
+    <style>
+        .nav-item {
+            color: grey;
+            border-radius: 3px;
+            padding: 0;
+        }
+
+        .dropdown {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .nav-link {
+            padding-left: 10px;
+            padding-right: 10px;
+            display: inline-block;
+            border-radius: 3px;
+            color: grey;
+        }
+
+        .dropdown {
+            padding-right: 10px;
+            padding-left: 10px;
+            color: grey;
+            border-radius: 3px;
+        }
+
+        .dropdown-menu {
+            background-color: #f8f9fa;
+        }
+
+        .show > .nav-link {
+            color: #f8f9fa !important;
+            background-color: grey;
+        }
+
+        .nav-link:hover {
+            color: #f8f9fa !important;
+            background-color: grey;
+            text-decoration: none;
+        }
+
+        body {
+            color: #000000;
+            background-color: #FFFFFF;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+}
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">You have successfully signed out.</p>
+@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })

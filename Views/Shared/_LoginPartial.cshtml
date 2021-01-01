@@ -1,0 +1,24 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <text>
+    <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text">
+                @if (User.Identity.Name != null)
+                {
+                    System.Security.Claims.ClaimsIdentity ci = (System.Security.Claims.ClaimsIdentity)User.Identity;
+
+                <span style="color:white"><text>Welcome back, @ci.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value @ci.FindFirst(System.Security.Claims.ClaimTypes.Surname).Value!&emsp;</text></span>
+                }
+            </li>
+        <li>
+            @Html.ActionLink("Sign out", "SignOut", "Account",null, new { @class = "nav-link"})
+        </li>
+    </ul>
+    </text>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Sign in", "SignIn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    </ul>
+}
