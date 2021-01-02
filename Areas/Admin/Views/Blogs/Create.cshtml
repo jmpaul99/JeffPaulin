@@ -22,24 +22,24 @@
                 <input asp-for="CreatedDate" class="form-control" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="LastPostDate" class="control-label"></label>
                 <input asp-for="LastPostDate" class="form-control" />
                 <span asp-validation-for="LastPostDate" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="BlogHeader" class="control-label"></label>
-                <input asp-for="BlogHeader" class="form-control" />
+                <textarea asp-for="BlogHeader" class="form-control"></textarea>
                 <span asp-validation-for="BlogHeader" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BlogSubHeader" class="control-label"></label>
-                <input asp-for="BlogSubHeader" class="form-control" />
+                <textarea asp-for="BlogSubHeader" class="form-control"></textarea>
                 <span asp-validation-for="BlogSubHeader" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="BlogDescription" class="control-label"></label>
-                <input asp-for="BlogDescription" class="form-control" />
+                <textarea asp-for="BlogDescription" class="form-control"></textarea>
                 <span asp-validation-for="BlogDescription" class="text-danger"></span>
             </div>
             <div class="form-group form-check">

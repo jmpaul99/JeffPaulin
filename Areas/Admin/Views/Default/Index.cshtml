@@ -1,0 +1,14 @@
+﻿@model List<JeffPaulin.Areas.Admin.Models.AdminCenterViewModel>
+
+@{
+    ViewBag.Title = "Admin";
+}
+
+<h3 class="text-center">Jeff Paulin Admin</h3>
+<br />
+<div class="row row-cols-6 justify-content-center">
+    @foreach (var c in Model)
+    {
+        @Html.ActionLink(c.Controller, "Index", c.Controller, new { Area = "Admin" }, new { @class = "btn btn-jp-orange card-footer stretched-link box-shadow col m-2" })
+    }
+</div>
