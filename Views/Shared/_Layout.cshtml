@@ -32,10 +32,17 @@
                                 <a class="nav-link" asp-area="Admin" asp-controller="Default" asp-action="Index">Admin</a>
                             </li>
                         }
-
+                        <li class="ml-auto d-none d-md-block">
+                            @await Html.PartialAsync("_LoginPartial")
+                        </li>
+                        <li class="d-md-none">
+                            <hr />
+                            @await Html.PartialAsync("_LoginPartial")
+                        </li>
                     </ul>
+                    
                 </div>
-                @await Html.PartialAsync("_LoginPartial")
+                
             </div>
         </nav>
 
@@ -46,9 +53,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
-            &copy; 2020 - Jeff Paulin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Jeff Paulin - <a href="https://github.com/jmpaul99/JeffPaulin" target="_blank">GitHub</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
