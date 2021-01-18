@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace JeffPaulin.Areas.Admin.Controllers
 {
@@ -25,12 +24,12 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 .OrderBy(x => x.Controller).ToList();
             cl = cl.Where(x => x.Area == "Admin" && x.Controller != "DefaultController").Distinct().ToList();
 
-            List<AdminCenterViewModel> vm = new List<AdminCenterViewModel>();            
+            List<AdminCenterViewModel> vm = new List<AdminCenterViewModel>();
             foreach (var i in cl)
             {
-                string cName = i.Controller.Replace("Controller", ""); 
+                string cName = i.Controller.Replace("Controller", "");
                 cName = Regex.Replace(cName, "([a-z])_?([A-Z])", "$1 $2");
-                AdminCenterViewModel a = new AdminCenterViewModel() {Area = i.Area, Controller = cName };
+                AdminCenterViewModel a = new AdminCenterViewModel() { Area = i.Area, Controller = cName };
                 vm.Add(a);
             }
             return View(vm);

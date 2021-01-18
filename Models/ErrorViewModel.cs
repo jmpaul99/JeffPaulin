@@ -1,5 +1,3 @@
-using System;
-
 namespace JeffPaulin.Models
 {
     public class ErrorViewModel

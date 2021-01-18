@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JeffPaulin.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using JeffPaulin.Models;
 
 namespace JeffPaulin.Controllers
 {
@@ -22,7 +20,7 @@ namespace JeffPaulin.Controllers
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Blogs.Where(x=> x.Active == true && x.LastPostDate != DateTime.MinValue).ToListAsync());
+            return View(await _context.Blogs.Where(x => x.Active == true && x.LastPostDate != DateTime.MinValue).ToListAsync());
         }
 
         public async Task<IActionResult> Blog(string slug)

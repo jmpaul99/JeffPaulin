@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JeffPaulin.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using JeffPaulin.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace JeffPaulin.Areas.Admin.Controllers
 {
@@ -14,7 +12,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
     [Authorize]
     public class BlogsController : Controller
     {
-        
+
         private readonly jpContext _context;
 
         public BlogsController(jpContext context)

@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>94b52db2-0c41-4886-9ddc-4d3a73df1dcd</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>1</WebProject_DirectoryAccessLevelKey>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,10 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bower" Version="1.3.11" />
-    <PackageReference Include="jQuery" Version="3.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.2" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />

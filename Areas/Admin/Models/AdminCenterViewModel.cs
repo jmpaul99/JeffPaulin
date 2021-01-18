@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace JeffPaulin.Areas.Admin.Models
+﻿namespace JeffPaulin.Areas.Admin.Models
 {
     public class AdminCenterViewModel
     {
