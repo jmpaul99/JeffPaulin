@@ -4,7 +4,8 @@ for details on configuring this project to bundle and minify static web assets. 
 :root {
     --jp-blue: #03265E;
     --jp-light-blue: #66d9ff;
-    --jp-orange: #f64c72;
+    --jp-orange: #f83913
+    /*--jp-orange: #f64c72;*/
 }
 
 a.navbar-brand {
@@ -113,6 +114,12 @@ h1, h2, h3, h4, h5, h6 {
     /*position: relative;*/
 }
 
+.background-sky {
+    background-image: url(../images/sky.jpg);
+    background-position: bottom;
+    background-size: cover;
+}
+
 .jumbotron {
     background-color: transparent;
     height: 100%;
@@ -130,7 +137,7 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--jp-orange);
 }
 
-.btn-success:active:focus {
+.btn-jp-orange:active:focus {
     color: white !important;
     background-color: var(--jp-orange) !important;
     border-color: var(--jp-orange) !important;
@@ -140,13 +147,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--jp-orange) !important;
     background-color: var(--jp-blue);
     border-color: var(--jp-blue);
-}
-
-.btn-jp-orange:focus, .btn-jp-orange.focus {
-    color: white;
-    background-color: var(--jp-orange);
-    border-color: var(--jp-orange);
-    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 
 .btn-jp-orange.disabled, .btn-jp-orange:disabled {
@@ -168,6 +168,43 @@ h1, h2, h3, h4, h5, h6 {
         box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
     }
 
+.btn-jp-blue {
+    color: white !important;
+    background-color: var(--jp-blue);
+    border-color: var(--jp-blue);
+}
+
+.btn-jp-blue:active:focus {
+    color: white !important;
+    background-color: var(--jp-blue) !important;
+    border-color: var(--jp-blue) !important;
+}
+
+.btn-jp-blue:hover {
+    color: var(--jp-blue) !important;
+    background-color: var(--jp-light-blue);
+    border-color: var(--jp-light-blue);
+}
+
+    .btn-jp-blue.disabled, .btn-jp-blue:disabled {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-jp-blue:not(:disabled):not(.disabled):active, .btn-jp-blue:not(:disabled):not(.disabled).active,
+    .show > .btn-jp-blue.dropdown-toggle {
+        color: var(--jp-blue);
+        background-color: #0062cc;
+        border-color: #005cbf;
+    }
+
+        .btn-jp-blue:not(:disabled):not(.disabled):active:focus, .btn-jp-blue:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-jp-blue.dropdown-toggle:focus {
+            color: var(--jp-blue);
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+        }
+
 .material-icons {
     vertical-align: bottom;
 }
@@ -186,3 +223,20 @@ h1, h2, h3, h4, h5, h6 {
     color:var(--jp-orange)
 }
 
+.text-jp-blue {
+    color: var(--jp-blue)
+}
+
+.border-jp-blue {
+    border-color: var(--jp-blue) !important;
+}
+
+.toggleMore.collapsed:before {
+    content: 'more...';
+    display: block;
+}
+
+a.toggleMore:before {
+    content: 'less';
+    display: block;
+}

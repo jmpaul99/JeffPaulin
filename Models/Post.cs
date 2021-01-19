@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 #nullable disable
 
@@ -23,6 +24,7 @@ namespace JeffPaulin.Models
         public string PostHeader { get; set; }
         [DisplayName("Subtitle")]
         public string PostSubheader { get; set; }
+        [AllowHtml]
         [DisplayName("Body")]
         [Required]
         public string PostBody { get; set; }

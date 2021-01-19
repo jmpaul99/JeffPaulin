@@ -48,7 +48,29 @@ namespace JeffPaulin.Areas.Admin.Controllers
         // GET: Admin/Posts/Create
         public IActionResult Create()
         {
-            return View();
+            System.Security.Claims.ClaimsIdentity ci = new System.Security.Claims.ClaimsIdentity();
+            if (User.Identity.Name != null)
+            {
+                ci = (System.Security.Claims.ClaimsIdentity)User.Identity;
+            }
+            else
+            {
+                return Challenge();
+            }
+                Post p = new Post() 
+            {
+                CreatedDate = DateTime.Now,
+                BlogPostRecs = new List<BlogPostRec>(),
+                IsDraft = true,
+                PostedBy = $"{ci.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value} {ci.FindFirst(System.Security.Claims.ClaimTypes.Surname).Value}"
+            };
+            foreach (Blog b in _context.Blogs)
+            {
+                BlogPostRec bpr = new BlogPostRec() { BlogId = b.Id, Blog = b };
+                p.BlogPostRecs.Add(bpr);
+            }
+            
+            return View(p);
         }
 
         // POST: Admin/Posts/Create
@@ -56,14 +78,25 @@ namespace JeffPaulin.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostHeader,PostSubheader,PostBody,CreatedDate,PostedBy,IsDraft,IsActive,IsDeleted")] Post post)
+        public async Task<IActionResult> Create(Post post)
         {
             if (ModelState.IsValid)
             {
+                foreach (BlogPostRec rec in post.BlogPostRecs.Where(x => x.isChecked == false))
+                {
+                    post.BlogPostRecs.Remove(rec);
+                }
                 _context.Add(post);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            post.BlogPostRecs = new List<BlogPostRec>();
+            foreach (Blog b in _context.Blogs)
+            {
+                BlogPostRec bpr = new BlogPostRec() { BlogId = b.Id, Blog = b };
+                post.BlogPostRecs.Add(bpr);
+            }
+            post.CreatedDate = DateTime.Now;
             return View(post);
         }
 

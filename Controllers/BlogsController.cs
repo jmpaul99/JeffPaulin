@@ -20,7 +20,7 @@ namespace JeffPaulin.Controllers
         // GET: Blogs
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Blogs.Where(x => x.Active == true && x.LastPostDate != DateTime.MinValue).ToListAsync());
+            return View(await _context.Blogs.Where(x => x.Active == true && x.BlogPostRecs.Any()).Include(x => x.BlogPostRecs.OrderByDescending(y => y.Post.CreatedDate).Take(5)).ThenInclude(x=> x.Post).ToListAsync());
         }
 
         public async Task<IActionResult> Blog(string slug)

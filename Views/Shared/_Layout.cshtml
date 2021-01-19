@@ -4,14 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jeff Paulin @ViewData["Title"]</title>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/mbzobsql9vl2lhd7elp444vnrd6iz3tzhyp74pi6w889fjla/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="icon" type="image/png" href="~/images/logo.png" />
     <script>
         tinymce.init({
-            selector: 'textarea'
+            selector: 'textarea',
+            plugins: 'link image table',
+            contextmenu: 'link image table'
         });
     </script>
 </head>
