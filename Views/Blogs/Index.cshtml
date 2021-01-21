@@ -1,33 +1,33 @@
 ﻿@model IEnumerable<JeffPaulin.Models.Blog>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Blogs";
 }
 
 <h1 class="background-sky text-center display-3 text-jp-orange p-3 mb-3">Blogs</h1>
 
 @foreach (var b in Model) {
 <div class="card border border-jp-blue">
-    <h3 class="card-header text-center text-jp-orange" style="background-color:var(--jp-blue)">@b.BlogName</h3>
+    <a asp-controller="Blogs" asp-action="Blog" asp-route-slug="@System.Web.HttpUtility.UrlEncode(b.BlogName)" class="card-header btn btn-jp-blue"><h3>@b.BlogName</h3></a>
     <div class="card-body">
         <div>
             <h5 class="card-title">@b.BlogSubHeader</h5>
-            <p class="collapse card-text" id="collapseDescription">@b.BlogDescription</p>
-            <a class="toggleMore collapsed" data-toggle="collapse" href="#collapseDescription" role="button" aria-expanded="false" aria-controls="collapseDescription"></a>
+            <div class="collapse card-text" id="collapseDescription_@b.Id.ToString()">@b.BlogDescription</div>
+            <a class="toggleMore collapsed" data-toggle="collapse" href="#collapseDescription_@b.Id.ToString()" role="button" aria-expanded="false" aria-controls="collapseDescription_@b.Id.ToString()"></a>
         </div>
-        <a class="collapsed btn btn-sm btn-jp-orange mt-3" data-toggle="collapse" href="#collapsePosts" role="button" aria-expanded="false" aria-controls="collapsePosts">Show Posts</a>
+        <a class="collapsed btn btn-sm btn-jp-orange mt-3" data-toggle="collapse" href="#collapsePosts_@b.Id.ToString()" role="button" aria-expanded="false" aria-controls="collapsePosts_@b.Id.ToString()">Show Posts</a>
     </div>
-    <div class="card-footer collapse" id="collapsePosts">
+    <div class="card-footer collapse" id="collapsePosts_@b.Id.ToString()">
         <div>
             @if (b.BlogPostRecs.Any())
             {
                 foreach (BlogPostRec pr in b.BlogPostRecs.Where(x => x.Post.IsActive == true && x.Post.IsDraft == false && x.Post.IsDeleted == false))
                 {
-                    <span>@pr.Post.PostHeader</span>
+                    <a asp-action="Post" asp-controller="Posts" asp-route-slug="@System.Web.HttpUtility.UrlEncode($"{ pr.PostId}-{ pr.Post.PostHeader}")">@pr.Post.PostHeader</a>
                 }
                 if(b.BlogPostRecs.Count() == 5)
                 {
-                    <a href="#">View All...</a>
+                    <a asp-controller="Posts" asp-action="Index">View All...</a>
                 }
             }
 

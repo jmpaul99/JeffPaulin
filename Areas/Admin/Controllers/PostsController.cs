@@ -69,7 +69,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 BlogPostRec bpr = new BlogPostRec() { BlogId = b.Id, Blog = b };
                 p.BlogPostRecs.Add(bpr);
             }
-            
+            p.BlogPostRecs.OrderBy(x => x.Blog.BlogName);
             return View(p);
         }
 
@@ -97,6 +97,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 post.BlogPostRecs.Add(bpr);
             }
             post.CreatedDate = DateTime.Now;
+            post.BlogPostRecs.OrderBy(x => x.Blog.BlogName);
             return View(post);
         }
 
@@ -108,11 +109,25 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _context.Posts.Where(x => x.Id == id).Include(x => x.BlogPostRecs).FirstAsync();
             if (post == null)
             {
                 return NotFound();
             }
+            foreach (Blog b in _context.Blogs)
+            {
+                if(post.BlogPostRecs.Any(x => x.BlogId == b.Id))
+                {
+                    post.BlogPostRecs.Where(x => x.BlogId == b.Id).First().isChecked = true;
+                }
+                else
+                {
+                    BlogPostRec bpr = new BlogPostRec() { BlogId = b.Id, Blog = b };
+                    post.BlogPostRecs.Add(bpr);
+                }
+                
+            }
+            post.BlogPostRecs.OrderBy(x => x.Blog.BlogName);
             return View(post);
         }
 
@@ -148,6 +163,20 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            foreach (Blog b in _context.Blogs)
+            {
+                if (post.BlogPostRecs.Any(x => x.BlogId == b.Id))
+                {
+                    post.BlogPostRecs.Where(x => x.BlogId == b.Id).First().isChecked = true;
+                }
+                else
+                {
+                    BlogPostRec bpr = new BlogPostRec() { BlogId = b.Id, Blog = b };
+                    post.BlogPostRecs.Add(bpr);
+                }
+
+            }
+            post.BlogPostRecs.OrderBy(x => x.Blog.BlogName);
             return View(post);
         }
 

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<JeffPaulin.Models.Post>
+
+@{
+    ViewData["Title"] = "Posts";
+}
+
+<h1 class="background-sky text-center display-3 text-jp-orange p-3 mb-3">Posts</h1>
+
+@foreach (var p in Model) {
+<div class="card border border-jp-blue">
+    <a class="card-header btn btn-jp-blue" asp-action="Post" asp-route-slug="@System.Web.HttpUtility.UrlEncode($"{p.Id}-{p.PostHeader}")"><h3>@p.PostHeader</h3></a>
+    <div class="card-body">
+        <div>
+            <h5 class="card-title">@p.PostSubheader</h5>
+            <div class="collapse card-text" id="collapseBody_@p.Id.ToString()">@Html.Raw(p.PostBody)</div>
+            <small class="card-text text-muted">- Posted by @p.PostedBy on @p.CreatedDate.ToLongDateString()</small>
+            <a class="toggleMore collapsed" data-toggle="collapse" href="#collapseBody_@p.Id.ToString()" role="button" aria-expanded="false" aria-controls="collapseBody_@p.Id.ToString()">
+
+            </a>
+        </div>
+        <a class="collapsed btn btn-sm btn-jp-orange mt-3" data-toggle="collapse" href="#collapseBlogs_@p.Id.ToString()" role="button" aria-expanded="false" aria-controls="collapseBlogs_@p.Id.ToString()">Show Blogs</a>
+    </div>
+    <div class="card-footer collapse" id="collapseBlogs_@p.Id.ToString()">
+        <div>
+            @if (p.BlogPostRecs.Any())
+            {
+                foreach (BlogPostRec pr in p.BlogPostRecs.Where(x => x.Post.IsActive == true && x.Post.IsDraft == false && x.Post.IsDeleted == false))
+                {
+                    <a asp-action="Blog" asp-controller="Blogs" asp-route-slug="@System.Web.HttpUtility.UrlEncode(pr.Blog.BlogName)">@pr.Blog.BlogName</a>
+                }
+                if(p.BlogPostRecs.Count() == 5)
+                {
+                    <a asp-action="Index" asp-controller="Blogs">View All...</a>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+}

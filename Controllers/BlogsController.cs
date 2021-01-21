@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace JeffPaulin.Controllers
 {
-    //[Microsoft.AspNetCore.Authorization.Authorize]
     public class BlogsController : Controller
     {
         private readonly jpContext _context;
@@ -25,12 +25,13 @@ namespace JeffPaulin.Controllers
 
         public async Task<IActionResult> Blog(string slug)
         {
-            Blog b = await _context.Blogs.Where(x => x.Active == true && x.LastPostDate != DateTime.MinValue && x.BlogName == slug).FirstOrDefaultAsync();
+            string val = HttpUtility.UrlDecode(slug);
+            Blog b = await _context.Blogs.Where(x => x.Active == true && x.BlogPostRecs.Any() && x.BlogName == val).Include(x => x.BlogPostRecs).ThenInclude(x => x.Post).FirstOrDefaultAsync();
             if (b == null)
             {
                 return NotFound();
             }
-            return View();
+            return View(b);
         }
 
     }
