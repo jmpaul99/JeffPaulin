@@ -7,7 +7,7 @@
 <h1 class="background-sky text-center display-3 text-jp-orange p-3 mb-3">Posts</h1>
 
 @foreach (var p in Model) {
-<div class="card border border-jp-blue">
+<div class="card border border-jp-blue mb-1">
     <a class="card-header btn btn-jp-blue" asp-action="Post" asp-route-slug="@System.Web.HttpUtility.UrlEncode($"{p.Id}-{p.PostHeader}")"><h3>@p.PostHeader</h3></a>
     <div class="card-body">
         <div>
