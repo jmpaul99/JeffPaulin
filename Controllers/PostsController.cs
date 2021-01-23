@@ -19,7 +19,7 @@ namespace JeffPaulin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Posts.Where(x => x.IsActive == true && x.IsDraft == false && x.IsDeleted == false && x.BlogPostRecs.Any()).Include(x => x.BlogPostRecs.OrderByDescending(y => y.Blog.BlogName).Take(5)).ThenInclude(x => x.Blog).ToListAsync());
+            return View(await _context.Posts.Where(x => x.IsActive == true && x.IsDraft == false && x.IsDeleted == false && x.BlogPostRecs.Any()).Include(x => x.BlogPostRecs.OrderByDescending(y => y.Blog.BlogName).Take(5)).ThenInclude(x => x.Blog).OrderByDescending(x => x.CreatedDate).ToListAsync());
         }
         public async Task<IActionResult> Post(string slug)
         {

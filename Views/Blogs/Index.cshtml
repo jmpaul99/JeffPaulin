@@ -7,7 +7,7 @@
 <h1 class="background-sky text-center display-3 text-jp-orange p-3 mb-3">Blogs</h1>
 
 @foreach (var b in Model) {
-<div class="card border border-jp-blue">
+<div class="card border border-jp-blue mb-1">
     <a asp-controller="Blogs" asp-action="Blog" asp-route-slug="@System.Web.HttpUtility.UrlEncode(b.BlogName)" class="card-header btn btn-jp-blue"><h3>@b.BlogName</h3></a>
     <div class="card-body">
         <div>
