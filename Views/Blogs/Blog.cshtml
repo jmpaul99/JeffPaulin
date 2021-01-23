@@ -5,10 +5,10 @@
 }
 
 <h1 class="background-sky text-center display-3 text-jp-orange p-3 mb-3">@Model.BlogName</h1>
-<h5 class="text-jp-blue m-1">@Model.BlogSubHeader</h5>
+<h5 class="text-jp-blue m-1">@Html.Raw(Model.BlogSubHeader)</h5>
 
 <div class="m-1">
-    @Model.BlogDescription<br />
+    @Html.Raw(Model.BlogDescription)<br />
     <small class="text-muted">This blog was created on @Model.CreatedDate.ToLongDateString()</small>
 </div>
 <hr />
