@@ -62,6 +62,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 CreatedDate = DateTime.Now,
                 BlogPostRecs = new List<BlogPostRec>(),
                 IsDraft = true,
+                IsActive = true,
                 PostedBy = $"{ci.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value} {ci.FindFirst(System.Security.Claims.ClaimTypes.Surname).Value}"
             };
             foreach (Blog b in _context.Blogs)

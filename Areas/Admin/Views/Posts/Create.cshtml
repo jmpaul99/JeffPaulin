@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="PostBody" class="control-label"></label>
-                <textarea asp-for="PostBody" class="form-control"  />@Html.Raw(Model.PostBody)</textarea>
+                <textarea asp-for="PostBody" class="form-control" />@Html.Raw(Model.PostBody)</textarea>
                 <span asp-validation-for="PostBody" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,13 +38,14 @@
                 <span asp-validation-for="PostedBy" class="text-danger"></span>
             </div>
             <hr />
+            <label class="control-label">Blogs</label>
             @{int i = 0;}
             @foreach (BlogPostRec rec in Model.BlogPostRecs)
             {
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input type="hidden" asp-for="BlogPostRecs.ElementAt(i).isChecked" name="BlogPostRecs[@i].BlogId" id="BlogPostRecs[@i].BlogId" value="@rec.BlogId" />
-                        <input type="checkbox" class="form-check-input" asp-for="BlogPostRecs.ElementAt(i).isChecked" name="BlogPostRecs[@i].isChecked" id="BlogPostRecs[@i].isChecked"  /> @rec.Blog.BlogName
+                        <input type="checkbox" class="form-check-input" asp-for="BlogPostRecs.ElementAt(i).isChecked" name="BlogPostRecs[@i].isChecked" id="BlogPostRecs[@i].isChecked" /> @rec.Blog.BlogName
                     </label>
                 </div>
                 ++i;

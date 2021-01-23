@@ -1,78 +1,96 @@
-﻿@{
+﻿@model JeffPaulin.Models.ViewModels.HomeViewModel
+
+@{
     ViewData["Title"] = "";
 }
 
 
-    <div class="text-center jumbotron-main" style="height:100%; overflow:visible">
-        <img src="~/images/logo.png" />
-        <h1 class="display-4 text-white">Jeff Paulin</h1>
-        @*<h2 style="color:white">Experianced IT Professional, Goalkeeping Coach, Traveler</h2>*@<br />
-        
-        <div class="container-fluid">
-            <div class="d-md-none">
-                <br /><br /><br /><br />
-            </div>
-            <div id="carouselCaptions" class="carousel slide" data-ride="carousel" data-interval="5000" data-pause="hover" style="height:100%; overflow:visible">
-                <ol class="carousel-indicators" style="background-color:var(--jp-orange); margin-top:5%;">
-                    <li data-target="#carouselCaptions" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselCaptions" data-slide-to="1"></li>
-                    <li data-target="#carouselCaptions" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="carousel-text">
-                            <h4 style="color:var(--jp-light-blue)">Experienced IT Professional</h4>
-                            <p>Experience in all functions of an IT Department, with specialization in Web Development, .Net Framework + Core, Data Reporting and Anaylitics, and DevOps.</p>
-                            <div class="row justify-content-center">
-                                <div class="col-md-4" style="margin-top:1%;">
-                                    <a class="btn btn-jp-orange">
-                                        <i class="material-icons">
-                                            double_arrow
-                                        </i> Read the Blog
-                                    </a>
+<div class="text-center jumbotron-main" style="height:100%; overflow:visible">
+    <img src="~/images/logo.png" />
+    <h1 class="display-4 text-white">Jeff Paulin</h1>
+    @*<h2 style="color:white">Experianced IT Professional, Goalkeeping Coach, Traveler</h2>*@<br />
+
+    <div class="container-fluid">
+        <div class="d-md-none">
+            <br /><br /><br /><br />
+        </div>
+        <div id="carouselCaptions" class="carousel slide" data-ride="carousel" data-interval="5000" data-pause="hover" style="height:100%; overflow:visible">
+            <ol class="carousel-indicators" style="background-color:var(--jp-orange); margin-top:5%;">
+                @{int i = 0;}
+                @foreach (Blog b in Model.blogs)
+                {
+                    if (i == 0)
+                    {
+                        <li data-target="#carouselCaptions" data-slide-to="@i" class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#carouselCaptions" data-slide-to="@i"></li>
+                    }
+                    ++i;
+                }
+            </ol>
+            <div class="carousel-inner">
+                @foreach (Blog b in Model.blogs.OrderBy(x => x.Id))
+                {
+                    if (b.Id == 1)
+                    {
+                        <div class="carousel-item active">
+                            <div class="carousel-text">
+                                <h4 style="color:var(--jp-light-blue)">@b.BlogName</h4>
+                                <div>
+                                    @b.BlogHeader
                                 </div>
-                                <div class="col-md-4" style="margin-top:1%;">
-                                    <a class="btn btn-jp-orange">
-                                        <i class="material-icons">
-                                            double_arrow
-                                        </i> View my Resume
-                                    </a>
-                                </div>
+                                <a class="btn btn-jp-orange" style="margin-top:1%;" asp-controller="Blogs" asp-action="Blog" asp-route-slug="@System.Web.HttpUtility.UrlEncode(b.BlogName)">
+                                    <i class="material-icons">
+                                        double_arrow
+                                    </i> Read the Blog
+                                </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="carousel-text">
-                            <h4 style="color:var(--jp-light-blue)">Goalkeeper Coach</h4>
-                            <p>Experienced Soccer Goalkeeper trainer for all ages and skill levels. Coaching experience is backed by an extensive playing career.</p>
-                            <a class="btn btn-jp-orange" style="margin-top:1%;">
-                                <i class="material-icons">
-                                    double_arrow
-                                </i> Read the Blog
-                            </a>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <div class="carousel-text">
+                                <h4 style="color:var(--jp-light-blue)">@b.BlogName</h4>
+                                @b.BlogHeader
+                                <a class="btn btn-jp-orange" style="margin-top:1%;" asp-controller="Blogs" asp-action="Blog" asp-route-slug="@System.Web.HttpUtility.UrlEncode(b.BlogName)">
+                                    <i class="material-icons">
+                                        double_arrow
+                                    </i> Read the Blog
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="carousel-text">
-                            <h4 style="color:var(--jp-light-blue)">Traveler</h4>
-                            <p>"We travel not to escape life, but for life not to escape us."</p>
-                            <a class="btn btn-jp-orange" style="margin-top:1%;">
-                                <i class="material-icons">
-                                    double_arrow
-                                </i> Read the Blog
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselCaptions" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                    }
+
+                }
             </div>
+            <br />
+            <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselCaptions" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
     </div>
+</div>
+<hr />
+<div>
+    <h2 class="display-4 mb-3 mt-3 text-center">Recent Posts</h2>
+    @foreach (Post p in Model.posts)
+    {
+        <div class="card box-shadow mb-2">
+            <a class="stretched-link" asp-action="Post" asp-controller="Posts" asp-route-slug="@System.Web.HttpUtility.UrlEncode($"{p.Id}-{ p.PostHeader}")">
+                <h5>@p.PostHeader</h5>
+            </a>
+            <div>@p.PostSubheader</div>
+            <div>
+                <small class="text-muted">Posted by @p.PostedBy on @p.CreatedDate.ToLongDateString()</small>
+            </div>
+        </div>
+    }
+</div>

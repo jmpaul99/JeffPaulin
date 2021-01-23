@@ -10,7 +10,7 @@
     <a class="btn btn-jp-orange" asp-action="Create">Create New</a>
 </p>
 @foreach (Post p in Model) {
-        <div class="row">
+        <div class="row m-3">
             <a class="col-md-6 btn btn-sm btn-jp-blue" asp-action="Details" asp-route-id="@p.Id">
                 @p.PostHeader
             </a>
