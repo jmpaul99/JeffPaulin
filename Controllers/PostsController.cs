@@ -27,7 +27,7 @@ namespace JeffPaulin.Controllers
             List<string> vals = val.Split("-", 2).ToList();
             int id = Int32.Parse(vals[0]);
             string title = vals[1];
-            Post p = await _context.Posts.Where(x => x.IsActive == true && x.IsDeleted == false && x.IsDraft == false).Include(x => x.BlogPostRecs).ThenInclude(x => x.Blog).FirstOrDefaultAsync();
+            Post p = await _context.Posts.Where(x => x.IsActive == true && x.IsDeleted == false && x.IsDraft == false && x.Id == id).Include(x => x.BlogPostRecs).ThenInclude(x => x.Blog).FirstOrDefaultAsync();
             if (p == null || p.PostHeader != title)
             {
                 return NotFound();
