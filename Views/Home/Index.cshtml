@@ -39,7 +39,7 @@
                             <div class="carousel-text">
                                 <h4 style="color:var(--jp-light-blue)">@b.BlogName</h4>
                                 <div>
-                                    @b.BlogHeader
+                                    @Html.Raw(@b.BlogHeader)
                                 </div>
                                 <a class="btn btn-jp-orange" style="margin-top:1%;" asp-controller="Blogs" asp-action="Blog" asp-route-slug="@System.Web.HttpUtility.UrlEncode(b.BlogName)">
                                     <i class="material-icons">
@@ -54,7 +54,9 @@
                         <div class="carousel-item">
                             <div class="carousel-text">
                                 <h4 style="color:var(--jp-light-blue)">@b.BlogName</h4>
-                                @b.BlogHeader
+                                <div>
+                                    @Html.Raw(@b.BlogHeader)
+                                </div>
                                 <a class="btn btn-jp-orange" style="margin-top:1%;" asp-controller="Blogs" asp-action="Blog" asp-route-slug="@System.Web.HttpUtility.UrlEncode(b.BlogName)">
                                     <i class="material-icons">
                                         double_arrow
@@ -80,7 +82,10 @@
 </div>
 <hr />
 <div>
-    <h2 class="display-4 mb-3 mt-3 text-center">Recent Posts</h2>
+    <h2 class="display-4 mt-3 text-center">Recent Posts</h2>
+    <div class="text-center mb-3">
+        <a asp-controller="Posts" asp-action="Index">View all posts</a>
+    </div>
     @foreach (Post p in Model.posts)
     {
         <div class="card box-shadow mb-2">
