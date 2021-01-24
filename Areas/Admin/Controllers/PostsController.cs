@@ -137,7 +137,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PostHeader,PostSubheader,PostBody,CreatedDate,PostedBy,IsDraft,IsActive,IsDeleted")] Post post)
+        public async Task<IActionResult> Edit(int id, Post post)
         {
             if (id != post.Id)
             {
@@ -148,6 +148,23 @@ namespace JeffPaulin.Areas.Admin.Controllers
             {
                 try
                 {
+                    foreach (BlogPostRec pr in post.BlogPostRecs)
+                    {
+                        pr.PostId = post.Id;
+                        if (_context.BlogPostRecs.Any(x=> x.PostId == pr.PostId && x.BlogId == pr.BlogId) && pr.isChecked == false)
+                        {
+                            post.BlogPostRecs.Remove(pr);
+                            _context.RemoveRange(_context.BlogPostRecs.Where(x => x.PostId == pr.PostId && x.BlogId == pr.BlogId));
+                        }
+                        if (_context.BlogPostRecs.Any(x => x.PostId == pr.PostId && x.BlogId == pr.BlogId) && pr.isChecked == true)
+                        {
+                            post.BlogPostRecs.Remove(pr);
+                        }
+                        if(pr.isChecked == false)
+                        {
+                            post.BlogPostRecs.Remove(pr);
+                        }
+                    }
                     _context.Update(post);
                     await _context.SaveChangesAsync();
                 }
