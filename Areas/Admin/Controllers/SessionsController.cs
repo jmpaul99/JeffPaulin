@@ -53,9 +53,15 @@ namespace JeffPaulin.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "GroupName");
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostBody");
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostHeader");
             ViewData["TermId"] = new SelectList(_context.Terms, "Id", "TermName");
-            return View();
+            Session s = new Session() { IsActive = true, IsDraft = true, SessionDate = DateTime.Now, PlayerForSessions = new List<PlayerForSession>() };
+            foreach (Player p in _context.Players.OrderBy(x => x.LastName))
+            {
+                PlayerForSession ps = new PlayerForSession() { Player = p, PlayerId = p.Id };
+                s.PlayerForSessions.Add(ps);
+            }
+            return View(s);
         }
 
         // POST: Admin/Sessions/Create
@@ -63,13 +69,27 @@ namespace JeffPaulin.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PostId,GroupId,TermId,SessionDate,IsDraft,IsActive,IsDeleted")] Session session)
+        public async Task<IActionResult> Create(Session session)
         {
             if (ModelState.IsValid)
             {
+                foreach (PlayerForSession rec in session.PlayerForSessions.Where(x => x.isChecked == false))
+                {
+                    session.PlayerForSessions.Remove(rec);
+                }
+                foreach (PlayerForSession rec in session.PlayerForSessions.Where(x => x.isChecked == true))
+                {
+                    rec.Attended = true;
+                }
                 _context.Add(session);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+            }
+            Session s = new Session() { IsActive = true, IsDraft = true, SessionDate = DateTime.Now, PlayerForSessions = new List<PlayerForSession>() };
+            foreach (Player p in _context.Players.OrderBy(x => x.LastName))
+            {
+                PlayerForSession ps = new PlayerForSession() { Player = p, PlayerId = p.Id };
+                s.PlayerForSessions.Add(ps);
             }
             ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "GroupName", session.GroupId);
             ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostBody", session.PostId);

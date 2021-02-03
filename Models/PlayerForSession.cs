@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -17,6 +18,8 @@ namespace JeffPaulin.Models
         [DisplayName("Technical Improvement Shown From Previous Session")]
         public bool TechnicalImprovementFromPreviousSession { get; set; }
         public string Notes { get; set; }
+        [NotMapped]
+        public bool isChecked { get; set; }
 
         public virtual Player Player { get; set; }
         public virtual Session Session { get; set; }
