@@ -1,0 +1,66 @@
+﻿@model JeffPaulin.Models.PlayerForSession
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>PlayerForSession</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="PlayerId" class="control-label"></label>
+                <input type="hidden" asp-for="PlayerId" />
+                <span class="form-control">@Model.Player.FirstName @Model.Player.LastName</span>
+                <span asp-validation-for="PlayerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SessionId" class="control-label"></label>
+                <input type="hidden" asp-for="SessionId" />
+                <span class="form-control">@Model.SessionId</span>
+                <span asp-validation-for="SessionId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Attended" /> @Html.DisplayNameFor(model => model.Attended)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkEthic" class="control-label"></label>
+                <input asp-for="WorkEthic" class="form-control" />
+                <span asp-validation-for="WorkEthic" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TechnicalImprovementDuringSession" /> @Html.DisplayNameFor(model => model.TechnicalImprovementDuringSession)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="TechnicalImprovementFromPreviousSession" /> @Html.DisplayNameFor(model => model.TechnicalImprovementFromPreviousSession)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <textarea asp-for="Notes" class="form-control" />@Model.Notes</textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

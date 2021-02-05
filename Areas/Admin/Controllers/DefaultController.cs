@@ -29,7 +29,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
             {
                 string cName = i.Controller.Replace("Controller", "");
                 cName = Regex.Replace(cName, "([a-z])_?([A-Z])", "$1 $2");
-                AdminCenterViewModel a = new AdminCenterViewModel() { Area = i.Area, Controller = cName };
+                AdminCenterViewModel a = new AdminCenterViewModel() { Area = i.Area, ControllerName = cName, Controller = i.Controller.Replace("Controller", "") };
                 vm.Add(a);
             }
             return View(vm);

@@ -9,6 +9,6 @@
 <div class="row row-cols-6 justify-content-center">
     @foreach (var c in Model)
     {
-        @Html.ActionLink(c.Controller, "Index", c.Controller, new { Area = "Admin" }, new { @class = "btn btn-jp-orange card-footer stretched-link box-shadow col m-2" })
+        @Html.ActionLink(c.ControllerName, "Index", c.Controller, new { Area = "Admin" }, new { @class = "btn btn-jp-orange card-footer stretched-link box-shadow col m-2" })
     }
 </div>

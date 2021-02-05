@@ -1,12 +1,11 @@
 ﻿@model JeffPaulin.Models.Session
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = $"Edit Session {Model.Id}";
 }
 
-<h1>Edit</h1>
+<h1>Edit Session @Model.Id</h1>
 
-<h4>Session</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +14,9 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="PostId" class="control-label"></label>
-                <select asp-for="PostId" class="form-control" asp-items="ViewBag.PostId"></select>
+                <select asp-for="PostId" class="form-control" asp-items="ViewBag.PostId">
+                    <option selected value="@null">--- NONE ---</option>
+                </select>
                 <span asp-validation-for="PostId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,6 +34,21 @@
                 <input asp-for="SessionDate" class="form-control" />
                 <span asp-validation-for="SessionDate" class="text-danger"></span>
             </div>
+            <hr />
+            <label class="control-label">Players</label>
+            @{int i = 0;}
+            @foreach (PlayerForSession rec in Model.PlayerForSessions)
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input type="hidden" asp-for="PlayerForSessions.ElementAt(i).PlayerId" name="PlayerForSessions[@i].PlayerId" id="PlayerForSessions[@i].PlayerId" value="@rec.PlayerId" />
+                            <input type="checkbox" class="form-check-input" asp-for="PlayerForSessions.ElementAt(i).isChecked" name="PlayerForSessions[@i].isChecked" id="PlayerForSessions[@i].isChecked" /> @rec.Player.FirstName @rec.Player.LastName
+
+                    </label>
+                </div>
+                ++i;
+            }
+            <hr />
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsDraft" /> @Html.DisplayNameFor(model => model.IsDraft)

@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Mvc;
 
 #nullable disable
 
@@ -17,6 +21,7 @@ namespace JeffPaulin.Models
         public bool TechnicalImprovementDuringSession { get; set; }
         [DisplayName("Technical Improvement Shown From Previous Session")]
         public bool TechnicalImprovementFromPreviousSession { get; set; }
+        [AllowHtml]
         public string Notes { get; set; }
         [NotMapped]
         public bool isChecked { get; set; }

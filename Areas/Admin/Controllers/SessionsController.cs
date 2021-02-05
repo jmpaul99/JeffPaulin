@@ -92,7 +92,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 s.PlayerForSessions.Add(ps);
             }
             ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "GroupName", session.GroupId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostBody", session.PostId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostHeader", session.PostId);
             ViewData["TermId"] = new SelectList(_context.Terms, "Id", "TermName", session.TermId);
             return View(session);
         }
@@ -105,14 +105,27 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var session = await _context.Sessions.FindAsync(id);
+            var session = await _context.Sessions.Where(x => x.Id == id).Include(x => x.PlayerForSessions).FirstAsync();
             if (session == null)
             {
                 return NotFound();
             }
             ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "GroupName", session.GroupId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostBody", session.PostId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostHeader", session.PostId);
             ViewData["TermId"] = new SelectList(_context.Terms, "Id", "TermName", session.TermId);
+            foreach (Player p in _context.Players)
+            {
+                if (session.PlayerForSessions.Any(x => x.PlayerId == p.Id))
+                {
+                    session.PlayerForSessions.Where(x => x.PlayerId == p.Id).First().isChecked = true;
+                }
+                else
+                {
+                    PlayerForSession ps = new PlayerForSession() { PlayerId = p.Id, Player = p };
+                    session.PlayerForSessions.Add(ps);
+                }
+            }
+            session.PlayerForSessions.OrderBy(x => x.Player.LastName);
             return View(session);
         }
 
@@ -121,7 +134,7 @@ namespace JeffPaulin.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PostId,GroupId,TermId,SessionDate,IsDraft,IsActive,IsDeleted")] Session session)
+        public async Task<IActionResult> Edit(int id, Session session)
         {
             if (id != session.Id)
             {
@@ -132,6 +145,27 @@ namespace JeffPaulin.Areas.Admin.Controllers
             {
                 try
                 {
+                    foreach (PlayerForSession ps in session.PlayerForSessions)
+                    {
+                        ps.SessionId = session.Id;
+                        if (_context.PlayerForSessions.Any(x => x.SessionId == ps.SessionId && x.PlayerId == ps.PlayerId) && ps.isChecked == false)
+                        {
+                            session.PlayerForSessions.Remove(ps);
+                            _context.RemoveRange(_context.PlayerForSessions.Where(x => x.SessionId == ps.SessionId && x.PlayerId == ps.PlayerId));
+                        }
+                        if (_context.PlayerForSessions.Any(x => x.SessionId == ps.SessionId && x.PlayerId == ps.PlayerId) && ps.isChecked == true)
+                        {
+                            session.PlayerForSessions.Remove(ps);
+                        }
+                        if (ps.isChecked == false)
+                        {
+                            session.PlayerForSessions.Remove(ps);
+                        }
+                        if (ps.isChecked == true)
+                        {
+                            ps.Attended = true;
+                        }
+                    }
                     _context.Update(session);
                     await _context.SaveChangesAsync();
                 }
@@ -149,8 +183,21 @@ namespace JeffPaulin.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GroupId"] = new SelectList(_context.Groups, "Id", "GroupName", session.GroupId);
-            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostBody", session.PostId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "PostHeader", session.PostId);
             ViewData["TermId"] = new SelectList(_context.Terms, "Id", "TermName", session.TermId);
+            foreach (Player p in _context.Players)
+            {
+                if (session.PlayerForSessions.Any(x => x.PlayerId == p.Id))
+                {
+                    session.PlayerForSessions.Where(x => x.PlayerId == p.Id).First().isChecked = true;
+                }
+                else
+                {
+                    PlayerForSession ps = new PlayerForSession() { PlayerId = p.Id, Player = p };
+                    session.PlayerForSessions.Add(ps);
+                }
+            }
+            session.PlayerForSessions.OrderBy(x => x.Player.LastName);
             return View(session);
         }
 
