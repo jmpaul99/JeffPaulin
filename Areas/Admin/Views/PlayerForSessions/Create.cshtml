@@ -27,7 +27,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="WorkEthic" class="control-label"></label>
-                <input asp-for="WorkEthic" class="form-control" />
+                <input data-provide="slider" data-slider-ticks="[1,2,3,4,5,6,7]" data-slider-ticks-lables='["1","2","3","4","5","6","7"]' data-slider-min="1" data-slider-max="7" data-slider-step="1" data-slider-value="4" asp-for="WorkEthic" class="form-control" />
                 <span asp-validation-for="WorkEthic" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
