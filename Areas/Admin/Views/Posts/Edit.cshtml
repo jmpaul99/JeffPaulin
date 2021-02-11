@@ -45,7 +45,7 @@
                     <label class="form-check-label">
                         <input type="hidden" asp-for="BlogPostRecs.ElementAt(i).BlogId" name="BlogPostRecs[@i].BlogId" id="BlogPostRecs[@i].BlogId" value="@rec.BlogId" />
                         @*<input type="hidden" asp-for="BlogPostRecs.ElementAt(i).PostId" name="BlogPostRecs[@i].PostId" id="BlogPostRecs[@i].PostId" value="@rec.PostId" />*@
-                        <input type="checkbox" class="form-check-input" asp-for="BlogPostRecs.ElementAt(i).isChecked" name="BlogPostRecs[@i].isChecked" id="BlogPostRecs[@i].isChecked" value="@rec.isChecked" /> @rec.Blog.BlogName
+                        <input type="checkbox" class="form-check-input" asp-for="BlogPostRecs.ElementAt(i).isChecked" name="BlogPostRecs[@i].isChecked" id="BlogPostRecs[@i].isChecked"/> @rec.Blog.BlogName
                     </label>
                 </div>
                 ++i;
