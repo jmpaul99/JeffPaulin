@@ -171,6 +171,10 @@ namespace JeffPaulin.Areas.Admin.Controllers
                         if (ps.isChecked == true)
                         {
                             ps.Attended = true;
+                            if (ps.Notes == null)
+                            {
+                                ps.Notes = "";
+                            }
                         }
                     }
                     _context.Update(session);
