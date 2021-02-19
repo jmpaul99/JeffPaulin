@@ -73,13 +73,20 @@ namespace JeffPaulin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (PlayerForSession rec in session.PlayerForSessions.Where(x => x.isChecked == false))
+                foreach (PlayerForSession rec in session.PlayerForSessions)
                 {
-                    session.PlayerForSessions.Remove(rec);
-                }
-                foreach (PlayerForSession rec in session.PlayerForSessions.Where(x => x.isChecked == true))
-                {
-                    rec.Attended = true;
+                    if (rec.isChecked == false)
+                    {
+                        session.PlayerForSessions.Remove(rec);
+                    }
+                    else
+                    {
+                        rec.Attended = true;
+                    }
+                    if (rec.Notes == null)
+                    {
+                        rec.Notes = "";
+                    }
                 }
                 _context.Add(session);
                 await _context.SaveChangesAsync();
