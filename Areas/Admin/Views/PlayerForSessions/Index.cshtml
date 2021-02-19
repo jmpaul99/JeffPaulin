@@ -9,7 +9,13 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<nav class="nav nav-pills nav-justified" role="tablist">
+    <a class="nav-item active" href="#uneval" id="uneval-tab" data-toggle="tab" role="tab" aria-controls="uneval" aria-selected="true">Unevaluated Player Sessions</a>
+    <a class="nav-item" href="#eval" id="eval-tab" data-toggle="tab" role="tab" aria-controls="eval" aria-selected="false">Evaluated Player Sessions</a>
+</nav>
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="uneval" role="tabpanel" aria-labelledby="uneval-tab"><table class="table">
     <thead>
         <tr>
             <th>
@@ -37,35 +43,100 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Attended)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WorkEthic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TechnicalImprovementDuringSession)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TechnicalImprovementFromPreviousSession)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Player.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Session.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Where(x => x.WorkEthic == 0).OrderByDescending(x => x.SessionId))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attended)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WorkEthic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TechnicalImprovementDuringSession)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TechnicalImprovementFromPreviousSession)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Player.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Session.Id)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
-</table>
+</table></div>
+    <div class="tab-pane fade" id="eval" role="tabpanel" aria-labelledby="eval-tab">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Attended)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WorkEthic)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TechnicalImprovementDuringSession)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TechnicalImprovementFromPreviousSession)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Notes)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Player)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Session)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Where(x => x.WorkEthic != 0).OrderByDescending(x => x.SessionId))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Attended)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WorkEthic)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TechnicalImprovementDuringSession)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TechnicalImprovementFromPreviousSession)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Notes)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Player.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Session.Id)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
