@@ -16,8 +16,8 @@ namespace JeffPaulin.Models
         public string TermName { get; set; }
         public string TermDescription { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime TermStartDate { get; set; }
-        public DateTime TermEndDate { get; set; }
+        public DateTime? TermStartDate { get; set; }
+        public DateTime? TermEndDate { get; set; }
         public bool Active { get; set; }
 
         public virtual ICollection<Session> Sessions { get; set; }

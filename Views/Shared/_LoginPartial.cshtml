@@ -7,7 +7,7 @@
                 {
                     System.Security.Claims.ClaimsIdentity ci = (System.Security.Claims.ClaimsIdentity)User.Identity;
 
-                <span style="color:white"><text>Welcome back, @ci.FindFirst(System.Security.Claims.ClaimTypes.GivenName).Value @ci.FindFirst(System.Security.Claims.ClaimTypes.Surname).Value!&emsp;</text></span>
+                <span style="color:white"><text>Welcome back, @User.Identity.Name</text></span>
                 }
             </li>
         <li>

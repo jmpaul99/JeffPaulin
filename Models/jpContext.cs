@@ -1,5 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -7,9 +10,14 @@ namespace JeffPaulin.Models
 {
     public partial class jpContext : DbContext
     {
+
         public jpContext()
         {
         }
+
+        public IConfiguration Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
 
         public jpContext(DbContextOptions<jpContext> options)
             : base(options)
@@ -31,14 +39,17 @@ namespace JeffPaulin.Models
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<PostCategoryRec> PostCategoryRecs { get; set; }
         public virtual DbSet<PostEditRec> PostEditRecs { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Session> Sessions { get; set; }
         public virtual DbSet<Term> Terms { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserRoleRec> UserRoleRecs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=tcp:jpaulindbserver.database.windows.net,1433;Database=jp;");
+                optionsBuilder.UseSqlServer(Configuration.GetSection("ConnectionStrings:DefaultConnection").Value);
             }
         }
 
@@ -52,12 +63,9 @@ namespace JeffPaulin.Models
 
                 entity.Property(e => e.Active).HasColumnName("active");
 
-                entity.Property(e => e.BlogDescription)
-                    .IsRequired()
-                    .HasColumnName("blogDescription");
+                entity.Property(e => e.BlogDescription).HasColumnName("blogDescription");
 
                 entity.Property(e => e.BlogHeader)
-                    .IsRequired()
                     .HasMaxLength(500)
                     .HasColumnName("blogHeader");
 
@@ -67,7 +75,6 @@ namespace JeffPaulin.Models
                     .HasColumnName("blogName");
 
                 entity.Property(e => e.BlogSubHeader)
-                    .IsRequired()
                     .HasMaxLength(1000)
                     .HasColumnName("blogSubHeader");
 
@@ -195,14 +202,12 @@ namespace JeffPaulin.Models
                 entity.Property(e => e.CreatedDate).HasColumnName("createdDate");
 
                 entity.Property(e => e.FirstName)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("firstName");
 
                 entity.Property(e => e.GenderId).HasColumnName("genderId");
 
                 entity.Property(e => e.LastName)
-                    .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("lastName");
 
@@ -219,9 +224,7 @@ namespace JeffPaulin.Models
 
                 entity.Property(e => e.Attended).HasColumnName("attended");
 
-                entity.Property(e => e.Notes)
-                    .IsRequired()
-                    .HasColumnName("notes");
+                entity.Property(e => e.Notes).HasColumnName("notes");
 
                 entity.Property(e => e.PlayerId).HasColumnName("playerId");
 
@@ -303,9 +306,7 @@ namespace JeffPaulin.Models
 
                 entity.Property(e => e.EditDate).HasColumnName("editDate");
 
-                entity.Property(e => e.EditNotes)
-                    .IsRequired()
-                    .HasColumnName("editNotes");
+                entity.Property(e => e.EditNotes).HasColumnName("editNotes");
 
                 entity.Property(e => e.EditedBy)
                     .HasMaxLength(100)
@@ -342,6 +343,23 @@ namespace JeffPaulin.Models
                     .HasForeignKey(d => d.PostId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__PostEditR__postI__09A971A2");
+            });
+
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.ToTable("Role", "App");
+
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasColumnName("active")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.CreatedDate).HasColumnName("createdDate");
+
+                entity.Property(e => e.RoleName)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("roleName");
             });
 
             modelBuilder.Entity<Session>(entity =>
@@ -398,6 +416,50 @@ namespace JeffPaulin.Models
                     .HasColumnName("termName");
 
                 entity.Property(e => e.TermStartDate).HasColumnName("termStartDate");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("User", "App");
+
+                entity.Property(e => e.CreatedDate).HasColumnName("createdDate");
+
+                entity.Property(e => e.UserGuid).HasColumnName("userGUID");
+            });
+
+            modelBuilder.Entity<UserRoleRec>(entity =>
+            {
+                entity.ToTable("UserRoleRec", "App");
+
+                entity.Property(e => e.Active)
+                    .IsRequired()
+                    .HasColumnName("active")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.AssignedDate).HasColumnName("assignedDate");
+
+                entity.Property(e => e.OrganizationId).HasColumnName("organizationId");
+
+                entity.Property(e => e.RoleId).HasColumnName("roleId");
+
+                entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.HasOne(d => d.Organization)
+                    .WithMany(p => p.UserRoleRecs)
+                    .HasForeignKey(d => d.OrganizationId)
+                    .HasConstraintName("FK__UserRoleR__organ__1DB06A4F");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.UserRoleRecs)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__UserRoleR__roleI__1CBC4616");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserRoleRecs)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__UserRoleR__userI__1BC821DD");
             });
 
             OnModelCreatingPartial(modelBuilder);

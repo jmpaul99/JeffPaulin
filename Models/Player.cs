@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 #nullable disable
 
@@ -14,11 +13,8 @@ namespace JeffPaulin.Models
         }
 
         public int Id { get; set; }
-        [DisplayName("First Name")]
         public string FirstName { get; set; }
-        [DisplayName("Last Name")]
         public string LastName { get; set; }
-        [DisplayName("Player Created Date")]
         public DateTime CreatedDate { get; set; }
         public int GenderId { get; set; }
 

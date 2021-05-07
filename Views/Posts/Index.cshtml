@@ -27,6 +27,7 @@
                 foreach (BlogPostRec pr in p.BlogPostRecs.Where(x => x.Post.IsActive == true && x.Post.IsDraft == false && x.Post.IsDeleted == false))
                 {
                     <a asp-action="Blog" asp-controller="Blogs" asp-route-slug="@System.Web.HttpUtility.UrlEncode(pr.Blog.BlogName)">@pr.Blog.BlogName</a>
+                    <br />
                 }
                 if(p.BlogPostRecs.Count() == 5)
                 {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -16,12 +14,8 @@ namespace JeffPaulin.Models
 
         public int Id { get; set; }
         public int OrganizationId { get; set; }
-        [DisplayName("Group")]
-        [Required]
         public string GroupName { get; set; }
-        [DisplayName("Group Description")]
         public string GroupDescription { get; set; }
-        [DisplayName("Group Created Date")]
         public DateTime CreatedDate { get; set; }
         public bool Active { get; set; }
 

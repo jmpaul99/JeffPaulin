@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 #nullable disable
 
@@ -17,6 +18,7 @@ namespace JeffPaulin.Models
         public int? LastEditId { get; set; }
         public string EditedPostHeader { get; set; }
         public string EditedPostSubheader { get; set; }
+        [AllowHtml]
         public string EditedPostBody { get; set; }
         public string EditNotes { get; set; }
         public DateTime EditDate { get; set; }

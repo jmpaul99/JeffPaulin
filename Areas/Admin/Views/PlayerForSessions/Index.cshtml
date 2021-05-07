@@ -105,7 +105,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Where(x => x.WorkEthic != 0).OrderByDescending(x => x.SessionId))
+                @foreach (var item in Model.Where(x => x.WorkEthic != 0).OrderByDescending(x => x.SessionId) )
                 {
                     <tr>
                         <td>

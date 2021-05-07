@@ -24,6 +24,7 @@
                 foreach (BlogPostRec pr in b.BlogPostRecs.Where(x => x.Post.IsActive == true && x.Post.IsDraft == false && x.Post.IsDeleted == false))
                 {
                     <a asp-action="Post" asp-controller="Posts" asp-route-slug="@System.Web.HttpUtility.UrlEncode($"{ pr.PostId}-{ pr.Post.PostHeader}")">@pr.Post.PostHeader</a><span class="text-muted"> - @pr.Post.CreatedDate.ToShortDateString()</span>
+                    <br />
                 }
                 if(b.BlogPostRecs.Count() == 5)
                 {

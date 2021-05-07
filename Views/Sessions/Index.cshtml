@@ -1,1 +1,25 @@
-﻿<iframe width="100%" height="836" src="https://app.powerbi.com/view?r=eyJrIjoiZTZlOGVjOGQtMmE5Mi00MjY4LTljMDAtOTkwYzdlMjgwMjExIiwidCI6IjkxOWNhY2UwLTc5NWItNDVhMC05ZTY2LWE5M2YxZmE2ZjA3MCJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+﻿@*<iframe width="100%" height="836" src="https://app.powerbi.com/view?r=eyJrIjoiZTZlOGVjOGQtMmE5Mi00MjY4LTljMDAtOTkwYzdlMjgwMjExIiwidCI6IjkxOWNhY2UwLTc5NWItNDVhMC05ZTY2LWE5M2YxZmE2ZjA3MCJ9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>*@
+
+@model PagedList.IPagedList<JeffPaulin.Models.Session>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Sessions";
+}
+
+<h2>Students</h2>
+
+@foreach (var s in Model)
+{
+    <div>
+        @s.Group.GroupName<br />
+        @s.SessionDate.ToLocalTime().ToShortDateString()
+    </div>
+}
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+
+<pager class="pager-container" list="@Model" options="@PagedListRenderOptions.TwitterBootstrapPager" asp-action="Index" asp-controller="ControllerName" />
+@*@Html.PagedListPager(Model, page => Url.Action("Index", new {page}))*@

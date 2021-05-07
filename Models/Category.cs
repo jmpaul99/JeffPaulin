@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 #nullable disable
 
@@ -14,8 +13,6 @@ namespace JeffPaulin.Models
         }
 
         public int Id { get; set; }
-        [DisplayName("Post Category")]
-        [Required]
         public string Category1 { get; set; }
 
         public virtual ICollection<PostCategoryRec> PostCategoryRecs { get; set; }
